@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react'
 import { Input } from '../ui/input';
-import { formUrlQuery, removekeysFromQuery } from '@/lib/utils';
+import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const Search = ({ placeholder = 'Search title...' }: { placeholder?: string }) => {

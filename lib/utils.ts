@@ -82,7 +82,7 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams): string {
 
 
 //// lib/utils.js
-export function removekeysFromQuery({params, keysToRemove }:
+export function removeKeysFromQuery({params, keysToRemove }:
   UrlQueryParams) {
     const currentUrl =qs.parse(params)
     keysToRemove.forEach(key => {
