@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react'
 import { Input } from '../ui/input';
-import { formUrlQuery, removeKeysFromQuery } from '@/lib/utils';
+import { formUrlQuery, removekeysFromQuery } from '@/lib/utils';
 import { useRouter, useSearchParams } from 'next/navigation';
 
 const Search = ({ placeholder = 'Search title...' }: { placeholder?: string }) => {
@@ -19,15 +19,11 @@ const Search = ({ placeholder = 'Search title...' }: { placeholder?: string }) =
         newUrl = formUrlQuery({
           params: searchParams.toString(),
           key: 'query',
-          value: query
-        })
-      } else {
-        newUrl = removekeysFromQuery({
-          params: searchParams.toString(),
-          keysToRemove: ['query']
-        })
-      }
+          value: query,
+          keysToRemove: ['someKey', 'anotherKey']
 
+        })
+      } 
       router.push(newUrl, { scroll: false });
     }, 300)
 

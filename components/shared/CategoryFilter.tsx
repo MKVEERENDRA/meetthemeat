@@ -9,7 +9,7 @@ import {
 } from "@/components/ui/select"
 import { getAllCategories } from "@/lib/actions/category.actions";
 import { ICategory } from "@/lib/database/models/category.model";
-import { formUrlQuery, removeKeysFromQuery } from "@/lib/utils";
+import { formUrlQuery, removekeysFromQuery } from "@/lib/utils";
 import { useRouter, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 
@@ -35,17 +35,13 @@ const CategoryFilter = () => {
         newUrl = formUrlQuery({
           params: searchParams.toString(),
           key: 'category',
-          value: category
-        })
-      } else {
-        newUrl = removeKeysFromQuery({
-          params: searchParams.toString(),
-          keysToRemove: ['category']
-        })
-      }
+          value: category,
+          keysToRemove: [],
+        });
+      } 
 
       router.push(newUrl, { scroll: false });
-  }
+  };
 
   return (
     <Select onValueChange={(value: string) => onSelectCategory(value)}>

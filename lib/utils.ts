@@ -7,9 +7,9 @@ export function cn(...inputs: ClassValue[]) {
 }
 // utils.ts
 // utils.ts
-export function formatDateTime(dateString: Date)  {
+export function formatDateTime(dateString: Date) {
   const dateoptions: Intl.DateTimeFormatOptions = {
-    weekday:'short',
+    weekday: 'short',
     year: 'numeric',
     month: 'numeric',
     day: 'numeric',
@@ -18,26 +18,16 @@ export function formatDateTime(dateString: Date)  {
     second: 'numeric',
     hour12: true,
   };
-  const dateTimeoptions: Intl.DateTimeFormatOptions = {
-    weekday:'short',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  }
-  const timeoptions: Intl.DateTimeFormatOptions = {
-    weekday:'short',
-    year: 'numeric',
-    month: 'numeric',
-    day: 'numeric',
-  }
+
   const formattedDate = new Intl.DateTimeFormat('en-US', dateoptions).format(dateString);
 
   return {
     dateOnly: formattedDate.split(' ')[0],
     timeOnly: formattedDate.split(' ')[1],
+    dateTime: formattedDate, // Include the full formatted date and time
   };
-   
 }
+
 export const convertFileToUrl =(file: File) => URL.createObjectURL(file)
 
 export function handleError(error: unknown) {
@@ -54,8 +44,6 @@ export const formatPrice =(price: string)=>{
   return formattedPrice
 }
 
-
-// util.ts
 import qs, { ParsedQs } from 'qs';
 
 type UrlQueryParams = {
@@ -65,7 +53,7 @@ type UrlQueryParams = {
   value: string;
 };
 
-export function formUrlQuery({ params, key, value }: UrlQueryParams): string {
+export function formUrlQuery({ params, key, value, keysToRemove = [] }: UrlQueryParams): string {
   const currentUrl = qs.parse(params) || {};
 
   if (typeof currentUrl !== 'object' || currentUrl === null) {
@@ -74,15 +62,22 @@ export function formUrlQuery({ params, key, value }: UrlQueryParams): string {
   }
 
   currentUrl[key] = value;
-
+  keysToRemove.forEach((keyToRemove: string | number) => {
+    delete currentUrl[keyToRemove];
+  });
   return window.location.pathname + '?' + qs.stringify(currentUrl, { skipNulls: true });
 }
+const query: string = getDynamicQuery(); // Replace getDynamicQuery() with the actual way you obtain the query
 
+formUrlQuery({
+  params: URLSearchParams.toString(),
+  key: 'query',
+  value: query,
+  keysToRemove: ['someKey', 'anotherKey']
 
+});
 
-
-//// lib/utils.js
-export function removeKeysFromQuery({params, keysToRemove }:
+export function removekeysFromQuery({params, keysToRemove }:
   UrlQueryParams) {
     const currentUrl =qs.parse(params)
     keysToRemove.forEach(key => {
@@ -90,3 +85,7 @@ export function removeKeysFromQuery({params, keysToRemove }:
     })
     return qs.stringify(currentUrl)
   }
+function getDynamicQuery(): string {
+  throw new Error("Function not implemented.");
+}
+
